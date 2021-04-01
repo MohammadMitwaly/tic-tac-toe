@@ -1,0 +1,3 @@
+# A Tic-Tac-Toe AI based on the MiniMax algorithm
+
+More coming soon...
