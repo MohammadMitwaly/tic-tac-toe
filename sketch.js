@@ -2,6 +2,7 @@
  *  Influenced a lot by:  https://www.youtube.com/watch?v=GTWrWM1UsnA
  * Some code copied and changed from: https://github.com/CodingTrain/website/blob/main/CodingChallenges/CC_149_Tic_Tac_Toe/P5/sketch.js
  */
+let w, h;
 
 let gameBoard = [
   ["", "", ""],
@@ -9,19 +10,15 @@ let gameBoard = [
   ["", "", ""],
 ];
 
-let players = ["X", "O"];
-
-let currentPlayer;
-let availablePositions = [];
+let AI_Player = "X";
+let Human_Player = "O";
+let currentPlayer = Human_Player;
 
 function setup() {
   createCanvas(700, 700);
-  currentPlayer = floor(random(players.length));
-  for (let j = 0; j < 3; j++) {
-    for (let i = 0; i < 3; i++) {
-      availablePositions.push([i, j]);
-    }
-  }
+  w = width / 3;
+  h = height / 3;
+  bestPosition();
 }
 
 const equalsThree = (a, b, c) => {
@@ -53,31 +50,41 @@ const checkWinner = () => {
     winner = gameBoard[2][0];
   }
 
+  let availablePositions = 0;
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      if (gameBoard[i][j] == "") {
+        availablePositions++;
+      }
+    }
+  }
+
   if (!winner && availablePositions.length == 0) {
     return "tie";
   }
   return winner;
 };
 
-const nextTurn = () => {
-  let index = floor(random(availablePositions.length));
-  let spot = availablePositions.splice(index, 1)[0];
-  let i = spot[0];
-  let j = spot[1];
-  gameBoard[i][j] = players[currentPlayer];
-  currentPlayer = (currentPlayer + 1) % players.length;
-};
-
-// function mousePressed() {
-//   nextTurn();
-// }
+function mousePressed() {
+  if (currentPlayer === Human_Player) {
+    // Human make turn
+    let i = floor(mouseX / w);
+    let j = floor(mouseY / h);
+    // If valid turn
+    if (gameBoard[i][j] === "") {
+      gameBoard[i][j] = Human_Player;
+      currentPlayer = AI_Player;
+      bestPosition();
+    }
+  }
+}
 
 function draw() {
   background(0);
-  let w = width / 3;
-  let h = height / 3;
   strokeWeight(6);
   stroke(255);
+
+  // Draw board shape
   line(w, 0, w, height);
   line(w * 2, 0, w * 2, height);
   line(0, h, width, h);
@@ -90,10 +97,10 @@ function draw() {
       let spot = gameBoard[i][j];
       textSize(32);
       let xRadius = w / 4;
-      if (spot == players[1]) {
+      if (spot === Human_Player) {
         noFill();
         ellipse(xCord, yCord, xRadius * 2);
-      } else if (spot == players[0]) {
+      } else if (spot === AI_Player) {
         line(
           xCord - xRadius,
           yCord - xRadius,
@@ -117,12 +124,10 @@ function draw() {
     resultDiv.style("font-size", "32pt");
     resultDiv.style("color", "white");
 
-    if (result == "tie") {
+    if (result === "tie") {
       resultDiv.html("Tie!");
     } else {
       resultDiv.html(`${result} is the Winner!`);
     }
-  } else {
-    nextTurn();
   }
 }
