@@ -65,6 +65,7 @@ const checkWinner = () => {
   return winner;
 };
 
+// This is called on left-button mouse press
 function mousePressed() {
   if (currentPlayer === Human_Player) {
     // Human make turn
@@ -79,6 +80,7 @@ function mousePressed() {
   }
 }
 
+// This runs every frame
 function draw() {
   background(0);
   strokeWeight(6);
