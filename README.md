@@ -1,5 +1,6 @@
 # A Tic-Tac-Toe AI based on the MiniMax algorithm
 A live version can be [found here.](https://mohammadmitwaly.github.io/tic-tac-toe/)
+
 *Here is how the UI looks:*
 ![Game UI](docs/tic-tac-toe-ui.png)
 
