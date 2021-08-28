@@ -16,4 +16,4 @@ A live version can be [found here.](https://mohammadmitwaly.github.io/tic-tac-to
     browser-sync start --server -f -w
 ```
 
-- The app would then be live at [http://localhost:3000](http://localhost:3000)
+- The app would then be live [here](http://localhost:3000)
